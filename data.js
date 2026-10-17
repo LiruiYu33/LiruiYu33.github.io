@@ -27,7 +27,7 @@ window.SITE = {
     { value: 40, suffix: "+", label: { zh: "缺陷闭环 · 19 项 P0", en: "defects closed · 19 P0" } },
     { value: 113, prefix: "+", suffix: "%", label: { zh: "K8s 扩容吞吐提升", en: "throughput gain on K8s" } },
     { value: 2600, suffix: "+", label: { zh: "SafeLane Twin 自动化测试", en: "automated tests in SafeLane Twin" } },
-    { value: 275, label: { zh: "Targie 自动化测试", en: "automated tests in Targie" } },
+    { value: 420, suffix: "+", label: { zh: "Targie 自动化测试", en: "automated tests in Targie" } },
     { value: 2, prefix: "#", label: { zh: "Monash × Google Shark Tank", en: "Monash × Google Shark Tank" } },
   ],
 
@@ -252,31 +252,47 @@ window.SITE = {
       featured: true,
       tags: [APP],
       metrics: [
-        { zh: "275 项 XCTest", en: "275 XCTests" },
+        { zh: "420+ 项 XCTest", en: "420+ XCTests" },
+        { zh: "80% 阈值误报 15 → 0", en: "False positives 15 → 0 at 80%" },
         { zh: "7 种语言", en: "7 languages" },
         { zh: "独立开发", en: "Solo-built" },
       ],
       summary: {
-        zh: "独立开发的原生 macOS 应用（Universal，arm64 + x86_64），扫描相似图片与视频，分组预览、批量选择并安全删除。",
-        en: "A native macOS app I built solo (Universal, arm64 + x86_64) that finds similar images and videos, with grouped previews, batch selection and safe deletion.",
+        zh: "独立完成的原生 macOS 应用（Universal 二进制，arm64 + x86_64），从产品设计到工程实现全栈；支持图片 / 视频相似度扫描、分组对比、框选批量操作与安全删除。",
+        en: "A native macOS app (Universal binary, arm64 + x86_64) I built solo, from product design to engineering: similarity scanning for images and videos, side-by-side group comparison, marquee batch actions and safe deletion.",
       },
-      stack: ["Swift 6", "SwiftUI", "AppKit", "AVFoundation", "Vision", "GRDB/SQLite", "Swift Concurrency", "XCTest", "GitHub Actions"],
+      stack: [
+        "Swift 6", "SwiftUI", "AppKit", "Observation", "AVFoundation", "Vision", "ImageIO", "CryptoKit",
+        "GRDB/SQLite", "Swift Concurrency", "XCTest", "GitHub Actions",
+      ],
       details: [
         {
-          zh: "分层相似度管线：多维分桶预筛 → DCT-3D / pHash 感知哈希 + BK-Tree 近邻检索 → SHA-256 精确去重 → Vision 特征复核，逐层剪枝避免 N² 全量比较",
-          en: "Layered similarity pipeline: multi-dimensional bucketing → DCT-3D / pHash + BK-Tree nearest-neighbour search → SHA-256 exact dedup → Vision feature check, pruning at each stage to avoid N² comparisons",
+          zh: "分层相似度管线：多维分桶预筛候选 → DCT-3D / pHash 感知哈希 + BK-Tree 近邻检索 → SHA-256 精确去重 → Vision 特征复核，逐层剪枝避免 N² 全量解码比较",
+          en: "Layered similarity pipeline: multi-dimensional bucketing → DCT-3D / pHash + BK-Tree nearest-neighbour search → SHA-256 exact dedup → Vision feature check, pruning at each stage to avoid decoding and comparing all N² pairs",
         },
         {
           zh: "基于 GRDB/SQLite 的多层持久化缓存（指纹、Vision 特征、配对结果、扫描索引），二次扫描逐层短路跳过解码与推理",
           en: "Multi-level GRDB/SQLite cache (fingerprints, Vision features, pair results, scan index) lets rescans skip decoding and inference",
         },
         {
-          zh: "Swift Concurrency 分阶段有界并行，按扫描强度与系统热状态自适应；数千文件规模下保持交互流畅",
+          zh: "相似度校准：构建约 1.2 万负样本对的校准集，对 Vision 余弦与 pHash 做基线扣除并重新加权；无关图片中位分从 41% 降至 10%，80% 阈值下误报从 15 对降至 0，默认阈值召回不变",
+          en: "Similarity calibration: built a ~12k negative-pair calibration set and applied baseline subtraction and reweighting to Vision cosine and pHash scores; the median score for unrelated images fell from 41% to 10% and false positives at the 80% threshold dropped from 15 pairs to 0, with recall unchanged at the default threshold",
+        },
+        {
+          zh: "性能调优：用帧级监测、sample 采样与 A/B 二分定位卡顿；迁移至 Observation 缩小视图失效范围、分栏视图常驻、消除离屏渲染并对卡片做 Equatable 剪枝——切组最长帧降低 21%，退出浏览耗时降低约 46%，框选主线程开销减半",
+          en: "Performance: located hitches with frame-level monitoring, sample profiling and A/B bisection; migrated to Observation to narrow view invalidation, kept split views resident, removed offscreen rendering and pruned cards with Equatable — 21% shorter worst frame when switching groups, ~46% faster exit from browse mode, and half the main-thread cost for marquee selection",
+        },
+        {
+          zh: "Swift Concurrency 分阶段有界并行，按扫描强度档位与系统热状态自适应；数千文件规模下保持交互流畅",
           en: "Staged, bounded parallelism with Swift Concurrency that adapts to scan intensity and thermal state, keeping the UI smooth across thousands of files",
         },
         {
-          zh: "支持七种语言；275 项 XCTest 通过 GitHub Actions 自动完成测试、Universal 构建与版本发布",
-          en: "Localised in 7 languages; 275 XCTests run in GitHub Actions alongside Universal builds and releases",
+          zh: "文件级容错隔离损坏媒体，扫描不中断；删除后维护组的稳定 ID 与用户选择",
+          en: "File-level fault isolation keeps scans running past corrupt media; stable group IDs and user selections survive deletions",
+        },
+        {
+          zh: "支持七种语言本地化；420+ 项 XCTest 经 GitHub Actions 自动完成测试、Universal 构建与版本发布；排查并修复 SwiftPM 构建后端误写 SDK 版本导致旧版 UI 的问题",
+          en: "Localised in 7 languages; 420+ XCTests run in GitHub Actions alongside Universal builds and releases; tracked down and fixed a SwiftPM build-backend bug that wrote the wrong SDK version and caused the legacy UI to appear",
         },
       ],
       image: "https://raw.githubusercontent.com/LiruiYu33/Targie-The-Similar-Videos-Images-Finder/HEAD/asset/Screenshot1.png",
