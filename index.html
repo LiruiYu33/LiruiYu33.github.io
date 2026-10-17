@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // 尽早应用主题，避免闪烁
+    try {
+      const t = localStorage.getItem("theme");
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add("js");
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" data-bind="name"></a>
+      <nav class="nav" id="nav">
+        <a href="#featured" data-i18n="nav.projects"></a>
+        <a href="#experience" data-i18n="nav.experience"></a>
+        <a href="#skills" data-i18n="nav.skills"></a>
+        <a href="#education" data-i18n="nav.education"></a>
+      </nav>
+      <div class="controls">
+        <button class="pill" id="langBtn" type="button" aria-label="Switch language"></button>
+        <button class="pill icon" id="themeBtn" type="button" aria-label="Toggle theme">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="blob b1"></span><span class="blob b2"></span>
+      </div>
+      <div class="wrap hero-inner">
+        <img class="avatar intro" id="avatar" alt="" hidden />
+        <div>
+          <p class="eyebrow intro" data-i18n="hello"></p>
+          <h1 class="intro" data-bind="name"></h1>
+          <p class="role intro" data-bind="title"></p>
+          <p class="tagline intro" data-bind="tagline"></p>
+          <div class="links intro" id="heroLinks"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap stats reveal" id="stats" aria-label="Highlights"></section>
+
+    <section class="wrap section" id="featured">
+      <h2 class="reveal" data-i18n="featuredTitle"></h2>
+      <div class="featured-list" id="featuredList"></div>
+    </section>
+
+    <section class="wrap section" id="projects">
+      <h2 class="reveal" data-i18n="moreTitle"></h2>
+      <div class="filters reveal" id="filters" role="tablist"></div>
+      <div class="grid" id="projectGrid"></div>
+    </section>
+
+    <section class="wrap section" id="experience">
+      <h2 class="reveal" data-i18n="nav.experience"></h2>
+      <div class="timeline" id="expList"></div>
+    </section>
+
+    <section class="wrap section" id="skills">
+      <h2 class="reveal" data-i18n="nav.skills"></h2>
+      <p class="hint reveal" data-i18n="skillsHint"></p>
+      <div class="skills" id="skillList"></div>
+    </section>
+
+    <section class="wrap section" id="education">
+      <h2 class="reveal" data-i18n="nav.education"></h2>
+      <div class="timeline" id="eduList"></div>
+      <h3 class="sub reveal" id="awardsTitle" data-i18n="awards"></h3>
+      <ul class="awards reveal" id="awardList"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>© <span id="year"></span> <span data-bind="name"></span></span>
+    <a href="#top" data-i18n="backToTop"></a>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
