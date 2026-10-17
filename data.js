@@ -16,6 +16,11 @@ window.SITE = {
   },
   avatar: "", // 例如 "assets/avatar.jpg"，留空则不显示头像
 
+  // 邮箱用 Base64 存放，源码里不出现明文地址，防止被爬虫抓取。
+  // 换邮箱：终端运行 printf '新邮箱' | base64，把结果填到这里。
+  // 链接里写 email: true 即可使用这个邮箱，可选 subject 作为邮件标题。
+  emailB64: "YWFyb255dTMzQHFxLmNvbQ==",
+
   // 首屏下方的亮点数字条。value 是会滚动计数的数字，prefix/suffix 加在数字前后。
   highlights: [
     { value: 10, suffix: "+", label: { zh: "RAGFlow PR · 9 项合入", en: "RAGFlow PRs · 9 merged" } },
@@ -28,7 +33,7 @@ window.SITE = {
 
   links: [
     { label: "GitHub", url: "https://github.com/LiruiYu33" },
-    { label: { zh: "邮箱", en: "Email" }, url: "mailto:aaronyu33@qq.com" },
+    { label: { zh: "邮箱", en: "Email" }, email: true },
     { label: { zh: "简历 PDF", en: "Resume PDF" }, url: "" }, // 例如 "assets/resume.pdf"
     { label: "LinkedIn", url: "" },
   ],
@@ -204,7 +209,8 @@ window.SITE = {
         { label: { zh: "在线访问", en: "Live site" }, url: "https://www.safelanetwin.tech" },
         {
           label: { zh: "申请代码访问（私有仓库）", en: "Request code access (private repo)" },
-          url: "mailto:aaronyu33@qq.com?subject=SafeLane%20Twin%20repo%20access",
+          email: true,
+          subject: "SafeLane Twin repo access",
         },
       ],
     },

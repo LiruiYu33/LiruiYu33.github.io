@@ -59,10 +59,27 @@
     if (text != null) n.textContent = text;
     return n;
   };
+  // 邮箱链接：页面上先放占位地址，访客悬停、聚焦或点击时才解码出真实邮箱，避免被爬虫抓取
+  const emailLink = (a, subject) => {
+    a.href = "#contact";
+    const arm = () => {
+      if (a.dataset.armed || !S.emailB64) return;
+      a.dataset.armed = "1";
+      a.href = "mailto:" + atob(S.emailB64) + (subject ? "?subject=" + encodeURIComponent(subject) : "");
+    };
+    ["pointerenter", "focus", "touchstart", "mousedown"].forEach((ev) => a.addEventListener(ev, arm, { passive: true }));
+    a.addEventListener("click", arm);
+  };
+
   const linkList = (links, cls) => {
     const box = el("div", cls);
-    (links || []).filter((l) => l.url).forEach((l) => {
+    (links || []).filter((l) => l.url || (l.email && S.emailB64)).forEach((l) => {
       const a = el("a", "", t(l.label));
+      if (l.email) {
+        emailLink(a, l.subject);
+        box.append(a);
+        return;
+      }
       a.href = l.url;
       if (!l.url.startsWith("mailto:") && !l.url.startsWith("#")) {
         a.target = "_blank";
