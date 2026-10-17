@@ -151,7 +151,7 @@ window.SITE = {
     },
     {
       name: { zh: "SafeLane Twin · 有轨电车混行路段骑行前路况预览", en: "SafeLane Twin — Pre-ride Context for Tram-shared Streets" },
-      period: "2026.08 – 2026.10",
+      period: { zh: "2026.08 – 至今", en: "2026.08 – present" },
       featured: true,
       tags: ["Web", CLOUD, "AI", TESTING],
       cover: { big: "SafeLane Twin", small: "safelanetwin.tech" },
@@ -166,7 +166,7 @@ window.SITE = {
         en: "A PWA for cyclists on Melbourne's Chapel Street, where bikes share the road with trams and cars — 109 cyclist crashes were recorded in 2021–2025, nearly half of them dooring. Before riding, users pick a segment and time to see forecast traffic, weather, live tram positions, tram-stop boarding layouts and historical crash density, with the riskiest segments flagged and quieter departure times suggested. My work spanned frontend, backend, database, ML, AWS deployment and domain launch.",
       },
       stack: [
-        "Vue 3", "TypeScript", "MapLibre GL", "FastAPI", "PostgreSQL + PostGIS", "scikit-learn", "XGBoost",
+        "Vue 3", "TypeScript", "MapLibre GL", "FastAPI", "PostgreSQL + PostGIS", "scikit-learn (HistGradientBoosting)",
         "AWS ECS Fargate", "RDS", "CloudFront", "S3", "Lambda", "CloudFormation", "GitHub Actions", "Vercel + Neon",
       ],
       details: [
@@ -175,8 +175,8 @@ window.SITE = {
           en: "AI-assisted workflow: built mainly with AI agents (Codex, Claude Code). AGENTS.md defines sources of truth, stack boundaries and security red lines (e.g. no secrets or DB credentials in the repo); handoff docs preserve context when switching agents; AI-generated code goes through ADRs, CI gates and peer-reviewed PRs.",
         },
         {
-          zh: "交通流量预测：用 SCATS 车流检测数据和历史天气预报，将约 1.9 万条半小时样本按时间顺序切分；对比 HistGradientBoosting、XGBoost、CatBoost、Chronos-2（零样本）和两种历史基线，选定日历特征 HistGB（对比集 WAPE ≈ 9.2%）。无检测器的 5 个路段用邻近路段加权插值，每天输出 10 路段 × 48 时段预测并接入 API 和界面。",
-          en: "Traffic forecasting: ~19k half-hourly samples from SCATS detectors plus historical weather forecasts, split chronologically. Compared HistGradientBoosting, XGBoost, CatBoost, Chronos-2 (zero-shot) and two historical baselines; chose HistGB with calendar features (WAPE ≈ 9.2% on the comparison set). Five segments without detectors use weighted interpolation from neighbours, producing 10 segments × 48 slots daily, served through the API and UI.",
+          zh: "交通流量预测：用 SCATS 车流检测数据和历史天气预报，将约 1.9 万条半小时样本按时间顺序切分；对比 HistGradientBoosting、XGBoost、CatBoost、Chronos-2（零样本）和两种历史基线，最终选定 scikit-learn HistGradientBoosting（对比集 WAPE ≈ 9.2%），上线了日历版和天气版两个模型。训练好的树模型导出为经过校验的 JSON，由后端用纯 Python 推理，线上不加载 pickle 等可执行模型文件。无检测器的 5 个路段用邻近路段加权插值，每天输出 10 路段 × 48 时段的预测。",
+          en: "Traffic forecasting: ~19k half-hourly samples from SCATS detectors plus historical weather forecasts, split chronologically. Compared HistGradientBoosting, XGBoost, CatBoost, Chronos-2 (zero-shot) and two historical baselines, and chose scikit-learn HistGradientBoosting (WAPE ≈ 9.2% on the comparison set), shipping a calendar model and a weather model. Trained trees are exported as validated JSON and evaluated in pure Python on the backend, so no pickle or other executable model files are loaded in production. Five segments without detectors use weighted interpolation from neighbours, producing 10 segments × 48 slots daily.",
         },
         {
           zh: "后端：基于 FastAPI 开发 20+ 个 REST 接口；用 Repository 协议解耦测试数据与 PostgreSQL 数据源，API 只通过只读角色访问视图；接入 GTFS-Realtime 电车数据和 Open-Meteo 天气，实现连接池、有界缓存 + SingleFlight 请求合并、功能开关和数据缺失时的显式降级。",
