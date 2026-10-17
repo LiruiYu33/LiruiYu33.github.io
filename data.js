@@ -95,7 +95,7 @@ window.SITE = {
           en: "Privately deployed 4 AI RAG products (Dify, FastGPT, Langfuse, MaxKB) on remote Ubuntu servers: Docker orchestration, port planning and conflict resolution, mirror optimisation, and multi-app environment isolation.",
         },
         {
-          zh: "负责自研 RAGFlow 的企业级运维与安全加固，修复 Nginx/MySQL 高危 CVE 漏洞，制定依赖组件跨大版本平滑升级方案，服务阿里云、西门子、特斯拉、沃尔玛、九坤投资、字节跳动、中芯国际等 10+ 行业头部客户。",
+          zh: "负责 RAGFlow 的企业级运维与安全加固，修复 Nginx/MySQL 高危 CVE 漏洞，制定依赖组件跨大版本平滑升级方案，服务阿里云、西门子、特斯拉、沃尔玛、九坤投资、字节跳动、中芯国际等 10+ 行业头部客户。",
           en: "Owned enterprise operations and security hardening for RAGFlow: patched high-severity Nginx/MySQL CVEs and planned smooth major-version dependency upgrades, serving 10+ leading clients including Alibaba Cloud, Siemens, Tesla, Walmart, ByteDance and SMIC.",
         },
         {
