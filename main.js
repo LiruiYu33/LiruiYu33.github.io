@@ -17,6 +17,7 @@
       all: "全部",
       more: "展开详情",
       less: "收起",
+      projectPhotos: "项目照片",
       backToTop: "回到顶部 ↑",
       lang: "EN",
     },
@@ -33,6 +34,7 @@
       all: "All",
       more: "Show details",
       less: "Hide details",
+      projectPhotos: "Project photos",
       backToTop: "Back to top ↑",
       lang: "中文",
     },
@@ -194,6 +196,31 @@
     });
   }
 
+  function projectPhotos(photos, projectId) {
+    const section = el("div", "feature-photos");
+    if (projectId) section.id = `${projectId}-photos`;
+    const grid = el("div", "feature-photos-grid");
+    if (photos.length === 2) grid.classList.add("feature-photos-pair");
+    photos.forEach((photo) => {
+      const figure = el("figure", "feature-photo");
+      const link = el("a");
+      link.href = photo.src;
+      link.target = "_blank";
+      link.rel = "noopener";
+      const img = el("img");
+      img.src = photo.src;
+      img.alt = t(photo.alt);
+      img.width = photo.width;
+      img.height = photo.height;
+      img.loading = "lazy";
+      link.append(img);
+      figure.append(link, el("figcaption", "", t(photo.caption)));
+      grid.append(figure);
+    });
+    section.append(el("h4", "", UI[lang].projectPhotos), grid);
+    return section;
+  }
+
   function renderFeatured() {
     const box = document.getElementById("featuredList");
     box.innerHTML = "";
@@ -201,6 +228,7 @@
     document.getElementById("featured").hidden = !list.length;
     list.forEach((p, i) => {
       const card = el("article", "feature");
+      if (p.id) card.id = p.id;
       const media = el("div", "feature-media");
       if (p.image) {
         const img = el("img");
@@ -225,6 +253,7 @@
       body.append(collapsible(p.details));
       body.append(linkList(p.links, "card-links"));
       card.append(media, body);
+      if (p.photos?.length) card.append(projectPhotos(p.photos, p.id));
       box.append(card);
       reveal(card, i);
     });

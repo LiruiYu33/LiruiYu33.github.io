@@ -150,6 +150,7 @@ window.SITE = {
       ],
     },
     {
+      id: "safelane",
       name: { zh: "SafeLane Twin · 有轨电车混行路段骑行前路况预览", en: "SafeLane Twin — Pre-ride Context for Tram-shared Streets" },
       period: { zh: "2026.08 – 至今", en: "2026.08 – present" },
       featured: true,
@@ -205,6 +206,28 @@ window.SITE = {
       ],
       image: "assets/safelane.jpg",
       imagePosition: "left center", // 截图裁切的对齐位置，默认 "top left"
+      photos: [
+        {
+          src: "assets/safelane-student-choice.jpg",
+          width: 1600,
+          height: 900,
+          caption: { zh: "Student Choice 获奖公告", en: "Student Choice Award announcement" },
+          alt: {
+            zh: "Monash Expo 获奖演示第 63 页，TE09 SafeLane Twin 获 Digital Twin for Future Cities 类别的 Student Choice Award",
+            en: "Monash Expo awards slide 63, naming TE09 SafeLane Twin the Student Choice Award winner in Digital Twin for Future Cities",
+          },
+        },
+        {
+          src: "assets/safelane-expo-participation.jpg",
+          width: 1600,
+          height: 2264,
+          caption: { zh: "Monash Expo 参展证明", en: "Monash Expo participation certificate" },
+          alt: {
+            zh: "Monash University 为虞礼瑞颁发的 2026 年研究生行业实践 Expo 参展证明",
+            en: "Monash University certificate of participation for Lirui Yu at the 2026 Postgraduate Industry Experience Expo",
+          },
+        },
+      ],
       links: [
         { label: { zh: "在线访问", en: "Live site" }, url: "https://www.safelanetwin.tech" },
         {
@@ -215,6 +238,7 @@ window.SITE = {
       ],
     },
     {
+      id: "loadmind",
       name: { zh: "LoadMind 智能货运匹配平台", en: "LoadMind — Smart Freight Matching" },
       period: "2026.02 – 2026.06",
       featured: true,
@@ -244,6 +268,29 @@ window.SITE = {
         },
       ],
       image: "https://raw.githubusercontent.com/LiruiYu33/LoadMind/HEAD/ScreenShots/02-carrier-ai-load-matcher.png",
+      photos: [
+        {
+          src: "assets/loadmind-certificate.jpg",
+          width: 1107,
+          height: 1600,
+          caption: { zh: "Monash 路演证书", en: "Monash pitch certificate" },
+          alt: { zh: "Monash University 颁给 LoadMind 团队的创业路演证书", en: "Monash University entrepreneurship pitch certificate awarded to Team LoadMind" },
+        },
+        {
+          src: "assets/loadmind-stickers.jpg",
+          width: 1600,
+          height: 1200,
+          caption: { zh: "Google for Developers 贴纸", en: "Google for Developers stickers" },
+          alt: { zh: "桌上摆放的 Google for Developers 贴纸和闪光徽标", en: "Google for Developers sticker sheets and holographic logo stickers on a table" },
+        },
+        {
+          src: "assets/loadmind-merch.jpg",
+          width: 1600,
+          height: 1200,
+          caption: { zh: "活动周边", en: "Event merchandise" },
+          alt: { zh: "The Generator T 恤、Gemini 水瓶和 Google 钥匙扣", en: "The Generator T-shirt, a Gemini water bottle and a Google keyring" },
+        },
+      ],
       links: [{ label: "GitHub", url: "https://github.com/LiruiYu33/LoadMind" }],
     },
     {
