@@ -18,6 +18,8 @@
       more: "展开详情",
       less: "收起",
       projectPhotos: "项目照片",
+      viewPhotos: "查看照片",
+      hidePhotos: "收起照片",
       backToTop: "回到顶部 ↑",
       lang: "EN",
     },
@@ -35,6 +37,8 @@
       more: "Show details",
       less: "Hide details",
       projectPhotos: "Project photos",
+      viewPhotos: "View photos",
+      hidePhotos: "Hide photos",
       backToTop: "Back to top ↑",
       lang: "中文",
     },
@@ -196,13 +200,10 @@
     });
   }
 
-  function projectPhotos(photos, projectId) {
-    const section = el("div", "feature-photos");
-    if (projectId) section.id = `${projectId}-photos`;
-    const grid = el("div", "feature-photos-grid");
-    if (photos.length === 2) grid.classList.add("feature-photos-pair");
+  function photoGrid(photos, className) {
+    const grid = el("div", className);
     photos.forEach((photo) => {
-      const figure = el("figure", "feature-photo");
+      const figure = el("figure", "gallery-photo");
       const link = el("a");
       link.href = photo.src;
       link.target = "_blank";
@@ -217,6 +218,14 @@
       figure.append(link, el("figcaption", "", t(photo.caption)));
       grid.append(figure);
     });
+    return grid;
+  }
+
+  function projectPhotos(photos, projectId) {
+    const section = el("div", "feature-photos");
+    if (projectId) section.id = `${projectId}-photos`;
+    const grid = photoGrid(photos, "feature-photos-grid");
+    if (photos.length === 2) grid.classList.add("feature-photos-pair");
     section.append(el("h4", "", UI[lang].projectPhotos), grid);
     return section;
   }
@@ -367,10 +376,29 @@
 
     const hasEdu = renderTimeline("eduList", S.education, (e) => [t(e.school), t(e.degree)]);
     const aw = document.getElementById("awardList");
+    const openAwards = new Set([...aw.querySelectorAll(".award-details[open]")].map((details) => details.parentElement.id));
     aw.innerHTML = "";
     (S.awards || []).forEach((a) => {
       const li = el("li");
-      li.append(el("span", "", t(a.name)), el("span", "", t(a.date)));
+      if (a.id) li.id = a.id;
+      const hasPhotos = a.photos?.length > 0;
+      const row = el(hasPhotos ? "summary" : "div", "award-row");
+      const meta = el("span", "award-meta");
+      meta.append(el("span", "award-date", t(a.date)));
+      row.append(el("span", "award-name", t(a.name)), meta);
+      if (hasPhotos) {
+        const toggle = el("span", "award-photos-toggle");
+        const arrow = el("span", "award-photos-arrow", "⌄");
+        arrow.setAttribute("aria-hidden", "true");
+        toggle.append(el("span", "view-photos", UI[lang].viewPhotos), el("span", "hide-photos", UI[lang].hidePhotos), arrow);
+        meta.append(toggle);
+        const details = el("details", "award-details");
+        details.open = openAwards.has(li.id);
+        details.append(row, photoGrid(a.photos, "award-photos-grid"));
+        li.append(details);
+      } else {
+        li.append(row);
+      }
       aw.append(li);
     });
     const hasAwards = (S.awards || []).length > 0;

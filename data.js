@@ -616,11 +616,49 @@ window.SITE = {
       date: "2026",
     },
     {
+      id: "ecommerce-award",
       name: {
-        zh: "全国大学生电子商务“三创”大赛 浙江省一等奖（Top 1%，15/3000+）",
-        en: "National College E-Commerce Innovation Competition — Zhejiang 1st Prize (top 1%, 15/3000+)",
+        zh: "全国大学生电子商务“三创”大赛浙江省一等奖(Top 1%, 排名15/3000+，获邀去阿里巴巴见习)",
+        en: "National College E-Commerce Innovation Competition — Zhejiang 1st Prize (top 1%, ranked 15th out of 3,000+, invited to a learning visit at Alibaba)",
       },
       date: "2023.06",
+      photos: [
+        {
+          src: "assets/alibaba-lobby.jpg",
+          width: 1600,
+          height: 1200,
+          caption: { zh: "阿里巴巴大厅", en: "Alibaba reception" },
+          alt: { zh: "阿里巴巴接待大厅的标志和前台", en: "Alibaba sign above the reception desk" },
+        },
+        {
+          src: "assets/alibaba-presentation.jpg",
+          width: 1600,
+          height: 796,
+          caption: { zh: "现场分享", en: "Presentation" },
+          alt: { zh: "台上的分享嘉宾和展示创业流程的大屏幕", en: "A speaker on stage beside a slide about the entrepreneurship process" },
+        },
+        {
+          src: "assets/alibaba-atrium.jpg",
+          width: 1600,
+          height: 1200,
+          caption: { zh: "园区中庭", en: "Campus atrium" },
+          alt: { zh: "从楼下拍摄的阿里巴巴园区中庭和楼梯", en: "The Alibaba campus atrium and staircase viewed from below" },
+        },
+        {
+          src: "assets/alibaba-atrium-overview.jpg",
+          width: 1600,
+          height: 1200,
+          caption: { zh: "中庭俯瞰", en: "Atrium from above" },
+          alt: { zh: "从楼上俯瞰阿里巴巴园区中庭", en: "The Alibaba campus atrium seen from an upper floor" },
+        },
+        {
+          src: "assets/alibaba-entrance.jpg",
+          width: 1080,
+          height: 1440,
+          caption: { zh: "到访留影", en: "Photo from the visit" },
+          alt: { zh: "阿里巴巴标志前的留影，面部已用贴纸遮挡", en: "Photo in front of an Alibaba sign, with a sticker covering the face" },
+        },
+      ],
     },
     {
       name: {
